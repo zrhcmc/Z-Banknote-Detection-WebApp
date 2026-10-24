@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <title>Banknote Detection | Prototype</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Banknote Detection home">
+      <span class="brand-mark">₱</span>
+      <span>Banknote<span class="brand-light">Vision</span></span>
+    </a>
+    <span id="apiStatus" class="status-pill"><span class="status-dot"></span> Checking API…</span>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">COMPUTER VISION · PHILIPPINE PESO</p>
+      <h1>Banknote <span>Detection</span></h1>
+      <p class="hero-copy">Upload or capture a banknote image to prepare it for analysis by our computer vision model.</p>
+      <div class="demo-notice" id="demoNotice">
+        <strong>Prototype mode</strong>
+        <span>The trained model is not connected yet. This page can validate an image, but cannot determine whether a bill is genuine or counterfeit.</span>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="Banknote image scanner">
+      <div class="panel upload-panel">
+        <div class="section-heading">
+          <div>
+            <p class="step-label">STEP 01</p>
+            <h2>Add a banknote image</h2>
+          </div>
+          <span class="small-tag">JPG · PNG · WEBP</span>
+        </div>
+
+        <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+        <div id="dropZone" class="drop-zone" tabindex="0" role="button" aria-label="Choose or drop an image">
+          <div class="upload-icon" aria-hidden="true">↑</div>
+          <h3>Choose an image</h3>
+          <p>Drag and drop here, or browse files on your device.</p>
+          <button id="browseButton" type="button" class="button button-secondary">Browse files</button>
+          <span class="hint">Maximum file size: 8 MB</span>
+        </div>
+
+        <div class="or-divider"><span>OR USE YOUR CAMERA</span></div>
+        <div class="camera-actions">
+          <button id="openCameraButton" class="button button-secondary" type="button">Open camera</button>
+          <button id="captureButton" class="button button-primary" type="button" disabled>Capture photo</button>
+        </div>
+        <div id="cameraWrap" class="camera-wrap" hidden>
+          <video id="cameraVideo" autoplay playsinline muted></video>
+          <p class="hint">Place the banknote in good light and keep all edges in frame.</p>
+        </div>
+        <canvas id="cameraCanvas" hidden></canvas>
+        <p class="privacy-note">Images are sent to this app's backend only when you click “Validate image”. This prototype does not save uploads to a database.</p>
+      </div>
+
+      <div class="panel preview-panel">
+        <div class="section-heading">
+          <div>
+            <p class="step-label">STEP 02</p>
+            <h2>Preview & result</h2>
+          </div>
+          <span id="fileBadge" class="small-tag">No image</span>
+        </div>
+
+        <div id="previewEmpty" class="preview-empty">
+          <div class="empty-art" aria-hidden="true"><span>₱</span><i></i><i></i><i></i></div>
+          <p>Your image preview will appear here.</p>
+        </div>
+        <img id="imagePreview" class="image-preview" alt="Selected banknote preview" hidden>
+        <div id="imageMeta" class="image-meta" hidden></div>
+
+        <button id="scanButton" class="button button-primary scan-button" type="button" disabled>Validate image</button>
+        <div id="feedback" class="feedback" role="status" aria-live="polite" hidden></div>
+
+        <div class="result-card" id="resultCard">
+          <div class="result-icon">i</div>
+          <div>
+            <h3>Waiting for an image</h3>
+            <p>Add a clear photo to check whether the file can be read by the prototype.</p>
+          </div>
+        </div>
+        <p class="disclaimer">Research prototype only. A model prediction is not an official authentication of currency. Verify suspicious banknotes through appropriate official channels.</p>
+      </div>
+    </section>
+
+    <section class="how-it-works">
+      <p class="eyebrow">HOW IT WORKS</p>
+      <div class="how-grid">
+        <article><span>01</span><h3>Capture</h3><p>Take a photo or choose an existing image.</p></article>
+        <article><span>02</span><h3>Validate</h3><p>The backend checks that the image can be opened and processed.</p></article>
+        <article><span>03</span><h3>Analyze</h3><p>Once integrated, the trained model will return its prediction.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>BanknoteVision · Academic prototype</span><span>Computer Vision for Philippine Banknote Anomaly Detection</span></footer>
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</body>
+</html>
